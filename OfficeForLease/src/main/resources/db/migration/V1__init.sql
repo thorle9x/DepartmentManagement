@@ -1,14 +1,46 @@
 -- USER -- password: 123456
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(100) NOT NULL,
+  `last_name` varchar(100) NOT NULL,
+  `pass_word` varchar(4000) NOT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `user_name` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_6efs5vmce86ymf5q7lmvn2uuf` (`user_id`)
+);
+-- USER_ROLES --
+DROP TABLE IF EXISTS `user_roles`;
+CREATE TABLE `user_roles` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `is_active` bigint(20) DEFAULT NULL,
+  `role_name` varchar(50) NOT NULL,
+  `user_role_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_6fl73fdt1m59rsgly4w7xmevs` (`user_role_id`)
+);
+-- ASSIGNED_USER_ROLES --
+DROP TABLE IF EXISTS `assigned_user_roles`;
+CREATE TABLE `assigned_user_roles` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `assigned_user_role_id` bigint(20) DEFAULT NULL,
+  `is_active` bigint(20) DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
+  `user_role_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK7cx7ajcflvk3teb65vryu95m9` (`user_id`),
+  KEY `FK8s8w02envlsubpm9h65pyte7` (`user_role_id`)
+);
+-- USERS data --
 INSERT INTO USERS (USER_ID, USER_NAME, PASS_WORD, FIRST_NAME, LAST_NAME) VALUES (1, 'username01', '$2a$10$CBAEKCjo19xCMixqMK4iv.YSH07H46mbgiWsE8ACkOAmchB7EYtR6', 'Nguyen', 'A');
 INSERT INTO USERS (USER_ID, USER_NAME, PASS_WORD, FIRST_NAME, LAST_NAME) VALUES (2, 'username02', '$2a$10$CBAEKCjo19xCMixqMK4iv.YSH07H46mbgiWsE8ACkOAmchB7EYtR6', 'Pham', 'B');
 INSERT INTO USERS (USER_ID, USER_NAME, PASS_WORD, FIRST_NAME, LAST_NAME) VALUES (3, 'username03', '$2a$10$CBAEKCjo19xCMixqMK4iv.YSH07H46mbgiWsE8ACkOAmchB7EYtR6', 'Ly', 'C');
-
--- USER_ROLES --
+-- USER ROLES data --
 INSERT INTO USER_ROLES (USER_ROLE_ID, IS_ACTIVE, ROLE_NAME) VALUES (1, 1, 'ROLE_ADMIN');
 INSERT INTO USER_ROLES (USER_ROLE_ID, IS_ACTIVE, ROLE_NAME) VALUES (2, 1, 'ROLE_USER');
 INSERT INTO USER_ROLES (USER_ROLE_ID, IS_ACTIVE, ROLE_NAME) VALUES (3, 1, 'ROLE_GUEST');
-
--- ASSIGNED_USER_ROLES --
+-- ASSIGNED_USER_ROLES  --
 INSERT INTO ASSIGNED_USER_ROLES (ASSIGNED_USER_ROLE_ID, IS_ACTIVE, USER_ID, USER_ROLE_ID) VALUES (1, 1, 1, 1);
 INSERT INTO ASSIGNED_USER_ROLES (ASSIGNED_USER_ROLE_ID, IS_ACTIVE, USER_ID, USER_ROLE_ID) VALUES (2, 1, 1, 2);
 INSERT INTO ASSIGNED_USER_ROLES (ASSIGNED_USER_ROLE_ID, IS_ACTIVE, USER_ID, USER_ROLE_ID) VALUES (3, 1, 2, 2);
