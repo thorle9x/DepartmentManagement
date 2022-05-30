@@ -1,0 +1,15 @@
+spring.profiles.include: 'service-config'
+spring:
+  profiles:
+    active: local_h2
+  servlet:
+    multipart:
+      max-file-size: 1000MB
+      max-request-size: 1000MB
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+server:
+  port: 7001
+  servlet:
+    contextPath:
