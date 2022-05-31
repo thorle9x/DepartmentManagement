@@ -23,6 +23,8 @@ spring:
         trace: true
         web-allow-others: false
   profiles: local_h2
+  flyway:
+    enabled: false
   datasource:
     url: jdbc:h2:mem:mydb
     username: sa
