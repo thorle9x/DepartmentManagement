@@ -1,8 +1,8 @@
 package com.department.service.impl;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -15,10 +15,13 @@ import com.department.exception.ServerException;
 import com.department.mapper.CustomerMapper;
 import com.department.model.dto.CustomerDTO;
 import com.department.model.entity.Customer;
+import com.department.model.entity.Department;
 import com.department.model.entity.Room;
 import com.department.repository.CustomerRepository;
 import com.department.repository.RoomRepository;
 import com.department.service.CustomerService;
+import com.department.service.DepartmentService;
+import com.department.service.RoomService;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -32,9 +35,15 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Autowired
 	CustomerMapper customerMapper;
-	
+
 	@Autowired
 	RoomRepository roomRepository;
+
+	@Autowired
+	RoomService roomService;
+
+	@Autowired
+	DepartmentService departmentService;
 
 	@Override
 	public CustomerDTO save(CustomerDTO model) throws Exception {
@@ -79,7 +88,14 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public List<CustomerDTO> findByRoomId(Long roomId) {
 		Room room = roomRepository.findById(roomId).get();
-		return customerRepository.findAllByRoomsIn(new HashSet<>(Arrays.asList(room))).stream().map(customerMapper::toDto).collect(Collectors.toList());
+		return customerRepository.findAllByRoomsIn(Arrays.asList(room)).stream().map(customerMapper::toDto).collect(Collectors.toList());
+	}
+
+	@Override
+	public Set<CustomerDTO> findByDeparmentId(Long departmentId) {
+		Department entity = departmentService.findByDepartmentId(departmentId);
+		List<Room> listRoom = roomRepository.findByDepartmentAndAvailable(entity, true);
+		return customerRepository.findAllByRoomsIn(listRoom).stream().map(customerMapper::toDto).collect(Collectors.toSet());
 	}
 
 }

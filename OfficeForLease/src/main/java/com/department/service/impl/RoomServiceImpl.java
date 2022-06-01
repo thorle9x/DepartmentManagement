@@ -91,4 +91,11 @@ public class RoomServiceImpl implements RoomService {
 		return roomRepository.findByDepartment(entity).stream().map(roomMapper::toDto).collect(Collectors.toList());
 	}
 
+	@Override
+	public List<RoomDTO> findByDepartmentIdAndAvailable(long id, boolean available) {
+		log.debug("Find Room by department id : {} and available : {}", id, available);
+		Department entity = departmentService.findByDepartmentId(id);
+		return roomRepository.findByDepartmentAndAvailable(entity, available).stream().map(roomMapper::toDto).collect(Collectors.toList());
+	}
+
 }

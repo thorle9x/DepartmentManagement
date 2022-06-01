@@ -1,7 +1,6 @@
 package com.department.model.dto;
 
 import java.io.Serializable;
-import java.util.Set;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,6 +36,5 @@ public class CustomerDTO extends AbstractDTO implements Serializable {
 	private String note;
 	
 	private String reference;
-
-	private Set<Integer> roomIds;
 }
+

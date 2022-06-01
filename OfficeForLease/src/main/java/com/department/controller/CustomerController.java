@@ -2,6 +2,7 @@ package com.department.controller;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -68,7 +69,7 @@ public class CustomerController extends AbstractController {
 	@ApiOperation(value = "Get All Customer by Room id", notes = "Get All Customer by Room id")
 	@ApiResponses(value = { @ApiResponse(code = 401, response = Response.class, message = "INVALID_TOKEN") })
 	@GetMapping("/room/{id}")
-	public ResponseEntity<ServerResponse> getAllCustomer(@PathVariable Long id) {
+	public ResponseEntity<ServerResponse> getAllCustomerByRoomId(@PathVariable Long id) {
 		List<CustomerDTO> listCustomer = null;
 		try {
 			listCustomer = customerService.findByRoomId(id);
@@ -76,5 +77,18 @@ public class CustomerController extends AbstractController {
 			return new ResponseEntity<>(new ServerResponse(HttpStatusEnum.NO_RECORD_FOUND, id).setResult(listCustomer), HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<>(new ServerResponse(HttpStatusEnum.SUCCESS).setResult(listCustomer), HttpStatus.OK);
+	}
+
+	@ApiOperation(value = "Get All Customer by Deparment id", notes = "Get All Customer by Department id")
+	@ApiResponses(value = { @ApiResponse(code = 401, response = Response.class, message = "INVALID_TOKEN") })
+	@GetMapping("/department/{id}")
+	public ResponseEntity<ServerResponse> getAllCustomerByDepartmentId(@PathVariable Long id) {
+		Set<CustomerDTO> setCustomer = null;
+		try {
+			setCustomer = customerService.findByDeparmentId(id);
+		} catch (Exception e) {
+			return new ResponseEntity<>(new ServerResponse(HttpStatusEnum.NO_RECORD_FOUND, id).setResult(setCustomer), HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<>(new ServerResponse(HttpStatusEnum.SUCCESS).setResult(setCustomer), HttpStatus.OK);
 	}
 }
