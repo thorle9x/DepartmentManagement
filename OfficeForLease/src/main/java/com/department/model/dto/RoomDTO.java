@@ -1,6 +1,7 @@
 package com.department.model.dto;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,5 +35,7 @@ public class RoomDTO extends AbstractDTO implements Serializable {
 	private Boolean available;
 
 	private long departmentId;
+
+	private Set<Integer> customerIds;
 
 }
