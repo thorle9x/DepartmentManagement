@@ -15,8 +15,6 @@ public class RoomDTO extends AbstractDTO implements Serializable {
 
 	private long id;
 
-	private Long roomId;
-
 	private String code;
 
 	private String name;
@@ -34,7 +32,7 @@ public class RoomDTO extends AbstractDTO implements Serializable {
 	private String utility;
 
 	private Boolean available;
-	
+
 	private long departmentId;
 
 }

@@ -45,7 +45,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 	@Override
 	public DepartmentDTO update(DepartmentDTO model, Long id) {
 		log.debug("Update Department by id : {}", id);
-		Department department = departmentRepository.findFirstByDepartmentId(id);
+		Department department = departmentRepository.findFirstById(id);
 		if (department != null) {
 			return departmentMapper.toDto(departmentRepository.save(department));
 		}
@@ -78,7 +78,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 	@Override
 	public List<RoomDTO> getAllRoomById(long id) throws Exception {
 		log.debug("Get All Room by department id : {}", id);
-		Department department = departmentRepository.findFirstByDepartmentId(id);
+		Department department = departmentRepository.findFirstById(id);
 		if (department != null) {
 			return department.getRooms().stream().map(roomMapper::toDto).collect(Collectors.toList());
 		}
@@ -87,7 +87,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
 	@Override
 	public Department findByDepartmentId(long id) {
-		return departmentRepository.findFirstByDepartmentId(id);
+		log.debug("Find by department id : {}", id);
+		return departmentRepository.findFirstById(id);
 	}
-
 }

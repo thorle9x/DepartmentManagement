@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import com.office.model.entity.Department;
 
 public interface DepartmentRepository extends JpaRepository<Department, Long>, JpaSpecificationExecutor<Department> {
-	Department findFirstByDepartmentId(Long id);
+	Department findFirstById(Long id);
 }

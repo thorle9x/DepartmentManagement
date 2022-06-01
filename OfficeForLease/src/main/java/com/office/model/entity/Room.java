@@ -18,19 +18,16 @@ import lombok.Setter;
 @Table(name = "ROOM")
 @Getter
 @Setter
-public class Room extends AbstractEntity implements Serializable{
+public class Room extends AbstractEntity implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 3013027666893861020L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-
-	@Column(name = "ROOM_ID")
-	private Long roomId;
 
 	@Column(name = "CODE", length = 20, nullable = false)
 	private String code;
@@ -52,15 +49,15 @@ public class Room extends AbstractEntity implements Serializable{
 
 	@Column(name = "AREA", nullable = false)
 	private String area;
-	
+
 	@Column(name = "UTILITY", nullable = false)
 	private String utility;
-	
+
 	@Column(name = "AVAILABLE", nullable = false)
 	private Boolean available;
-	
+
 	@ManyToOne
-	@JoinColumn(name = "DEPARTMENT_ID")
+	@JoinColumn(name = "DEPARTMENT_ID", referencedColumnName = "ID", nullable = false)
 	private Department department;
 
 }

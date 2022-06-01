@@ -29,10 +29,8 @@ public class Department extends AbstractEntity implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID")
 	private long id;
-
-	@Column(name = "DEPARTMENT_ID")
-	private Long departmentId;
 
 	@Column(name = "NAME", length = 100, nullable = false)
 	private String name;

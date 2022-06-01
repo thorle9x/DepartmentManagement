@@ -18,8 +18,6 @@ public class DepartmentDTO extends AbstractDTO implements Serializable {
 
 	private long id;
 
-	private Long departmentId;
-
 	private String name;
 
 	private String owner;
@@ -30,7 +28,7 @@ public class DepartmentDTO extends AbstractDTO implements Serializable {
 
 	private Float invesment;
 
-	@JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private Timestamp startDate;
 
 	private Boolean active;

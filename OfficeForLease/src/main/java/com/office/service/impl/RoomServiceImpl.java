@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.office.common.HttpStatusEnum;
 import com.office.exception.ServerException;
+import com.office.mapper.DepartmentMapper;
 import com.office.mapper.RoomMapper;
 import com.office.model.dto.RoomDTO;
 import com.office.model.entity.Department;
@@ -27,19 +28,27 @@ public class RoomServiceImpl implements RoomService {
 
 	@Autowired
 	RoomRepository roomRepository;
-	
-	@Autowired DepartmentService departmentService;
+
+	@Autowired
+	DepartmentService departmentService;
 
 	@Autowired
 	RoomMapper roomMapper;
 
+	@Autowired
+	DepartmentMapper departmentMapper;
+
 	@Override
 	public RoomDTO save(RoomDTO model) throws Exception {
 		log.info("Saving new Room: {} ", model.getName());
-		Department department = departmentService.findByDepartmentId(model.getDepartmentId());
-		Room entity = roomMapper.toEntity(model);
-		entity.setDepartment(department);
-		return roomMapper.toDto(roomRepository.save(entity));
+		try {
+			Department department = departmentMapper.toEntity(departmentService.findById(model.getDepartmentId()));
+			Room entity = roomMapper.toEntity(model);
+			entity.setDepartment(department);
+			return roomMapper.toDto(roomRepository.save(entity));
+		} catch (Exception e) {
+			throw new ServerException(HttpStatusEnum.UNEXPECTED, model);
+		}
 	}
 
 	@Override
