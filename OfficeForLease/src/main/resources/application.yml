@@ -50,7 +50,7 @@ logging:
 spring:
   profiles: local_mysql
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/OfficeForLease?useLegacyDatetimeCode=false&autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false&useUnicode=yes&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&sessionVariables=sql_mode=''
+    url: jdbc:mysql://127.0.0.1:3306/DepartmentForLease?useLegacyDatetimeCode=false&autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false&useUnicode=yes&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&sessionVariables=sql_mode=''
     username: root
     password: admin1
     driverClassName: com.mysql.cj.jdbc.Driver   

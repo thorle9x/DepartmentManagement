@@ -9,11 +9,11 @@
 		<version>2.6.6</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.office</groupId>
-	<artifactId>OfficeForLease</artifactId>
+	<groupId>com.department</groupId>
+	<artifactId>DepartmentForLease</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>OfficeForLease</name>
-	<description>Office for lease</description>
+	<name>DepartmentForLease</name>
+	<description>Department for lease</description>
 	<properties>
 		<java.version>11</java.version>
 		<springfox-version>3.0.0</springfox-version>
