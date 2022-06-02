@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,10 +36,23 @@ public class CustomerController extends AbstractController {
 	@PostMapping()
 	public ResponseEntity<ServerResponse> create(@RequestBody CustomerDTO model, Principal principal) {
 		try {
-			// add create by, updated by
 			model.setCreatedBy(getPrincipalName(principal));
 			model.setUpdatedBy(getPrincipalName(principal));
 			CustomerDTO customerDto = customerService.save(model);
+			return new ResponseEntity<>(new ServerResponse(HttpStatusEnum.SUCCESS).setResult(customerDto), HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(new ServerResponse(HttpStatusEnum.UNEXPECTED), HttpStatus.FORBIDDEN);
+		}
+	}
+	
+	@ApiOperation(value = "Update Customer", notes = "Create Customer")
+	@ApiResponses(value = { @ApiResponse(code = 401, response = Response.class, message = "INVALID_TOKEN") })
+	@PatchMapping
+	public ResponseEntity<ServerResponse> update(@RequestBody CustomerDTO model, @PathVariable Long id, Principal principal) {
+		try {
+			model.setUpdatedBy(getPrincipalName(principal));
+			CustomerDTO customerDto = customerService.update(model, id);
 			return new ResponseEntity<>(new ServerResponse(HttpStatusEnum.SUCCESS).setResult(customerDto), HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();

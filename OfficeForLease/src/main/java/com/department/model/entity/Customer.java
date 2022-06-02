@@ -1,6 +1,6 @@
 package com.department.model.entity;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,9 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -56,15 +54,14 @@ public class Customer extends AbstractEntity {
 
 	@Column(name = "TYPE", length = 10, nullable = false)
 	private String type;
-	
+
 	@Column(name = "REFERENCE", length = 100)
 	private String reference;
 
 	@Column(name = "NOTE")
 	private String note;
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinTable(name = "CUSTOMER_ROOM", joinColumns = @JoinColumn(name = "CUSTOMER_ID"), inverseJoinColumns = @JoinColumn(name = "ROOM_ID"))
-	private Set<Room> rooms;
+	@OneToMany(mappedBy = "room", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<CustomerRoom> customerRoom;
 
 }

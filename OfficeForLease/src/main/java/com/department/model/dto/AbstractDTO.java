@@ -6,17 +6,16 @@ import lombok.Data;
 
 @Data
 public class AbstractDTO implements Serializable {
-  /**
-  * 
-  */
-  private static final long serialVersionUID = 7131627638763051851L;
+	/**
+	* 
+	*/
+	private static final long serialVersionUID = 7131627638763051851L;
 
-  private Timestamp updatedDate;
+	private Timestamp updatedDate;
 
-  private String updatedBy;
+	private String updatedBy;
 
+	private Timestamp createdDate;
 
-  private Timestamp createdDate;
-
-  private String createdBy;
+	private String createdBy;
 }

@@ -1,6 +1,5 @@
 package com.department.service.impl;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -15,10 +14,12 @@ import com.department.exception.ServerException;
 import com.department.mapper.CustomerMapper;
 import com.department.model.dto.CustomerDTO;
 import com.department.model.entity.Customer;
+import com.department.model.entity.CustomerRoom;
 import com.department.model.entity.Department;
 import com.department.model.entity.Room;
 import com.department.repository.CustomerRepository;
 import com.department.repository.RoomRepository;
+import com.department.service.CustomerRoomService;
 import com.department.service.CustomerService;
 import com.department.service.DepartmentService;
 import com.department.service.RoomService;
@@ -44,6 +45,9 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Autowired
 	DepartmentService departmentService;
+
+	@Autowired
+	CustomerRoomService customerRoomService;
 
 	@Override
 	public CustomerDTO save(CustomerDTO model) throws Exception {
@@ -87,15 +91,17 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public List<CustomerDTO> findByRoomId(Long roomId) {
-		Room room = roomRepository.findById(roomId).get();
-		return customerRepository.findAllByRoomsIn(Arrays.asList(room)).stream().map(customerMapper::toDto).collect(Collectors.toList());
+//		Room room = roomRepository.findById(roomId).get();
+		List<CustomerRoom> customerRoomList = customerRoomService.findAllByRoomId(roomId);
+		return customerRoomList.stream().map(cs -> customerMapper.toDto(cs.getCustomer())).collect(Collectors.toList());
 	}
 
 	@Override
 	public Set<CustomerDTO> findByDeparmentId(Long departmentId) {
 		Department entity = departmentService.findByDepartmentId(departmentId);
 		List<Room> listRoom = roomRepository.findByDepartmentAndAvailable(entity, true);
-		return customerRepository.findAllByRoomsIn(listRoom).stream().map(customerMapper::toDto).collect(Collectors.toSet());
+		List<CustomerRoom> customerRoomList = customerRoomService.findAllByRoomInAndIsRented(listRoom, true);
+		return customerRoomList.stream().map(cs -> customerMapper.toDto(cs.getCustomer())).collect(Collectors.toSet());
 	}
 
 }

@@ -1,7 +1,7 @@
 package com.department.model.entity;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,8 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -64,7 +64,7 @@ public class Room extends AbstractEntity implements Serializable {
 	@JoinColumn(name = "DEPARTMENT_ID", referencedColumnName = "ID", nullable = false)
 	private Department department;
 
-	@ManyToMany(mappedBy = "rooms", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Set<Customer> customers;
+	@OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<CustomerRoom> customerRoom;
 
 }
