@@ -1,7 +1,6 @@
 package com.department.controller;
 
 import java.security.Principal;
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,7 +83,7 @@ public class CustomerController extends AbstractController {
 	@ApiResponses(value = { @ApiResponse(code = 401, response = Response.class, message = "INVALID_TOKEN") })
 	@GetMapping("/room/{id}")
 	public ResponseEntity<ServerResponse> getAllCustomerByRoomId(@PathVariable Long id) {
-		List<CustomerDTO> listCustomer = null;
+		Set<CustomerDTO> listCustomer = null;
 		try {
 			listCustomer = customerService.findByRoomId(id);
 		} catch (Exception e) {

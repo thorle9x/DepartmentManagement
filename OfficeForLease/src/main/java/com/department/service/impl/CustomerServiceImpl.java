@@ -1,5 +1,6 @@
 package com.department.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -13,6 +14,8 @@ import com.department.common.HttpStatusEnum;
 import com.department.exception.ServerException;
 import com.department.mapper.CustomerMapper;
 import com.department.model.dto.CustomerDTO;
+import com.department.model.dto.CustomerRoomDTO;
+import com.department.model.dto.RoomDTO;
 import com.department.model.entity.Customer;
 import com.department.model.entity.CustomerRoom;
 import com.department.model.entity.Department;
@@ -52,8 +55,29 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public CustomerDTO save(CustomerDTO model) throws Exception {
 		log.info("Saving new Customer: {} ", model.getName());
-		Customer entity = customerMapper.toEntity(model);
-		return customerMapper.toDto(customerRepository.save(entity));
+		Customer customerEntity = customerMapper.toEntity(model);
+		List<CustomerRoom> customerRoomList = new ArrayList<>();
+
+		List<CustomerRoomDTO> customerRoomListDto = model.getCustomerRoom();
+		customerRoomListDto.forEach(csDto -> {
+			CustomerRoom customerRoom = new CustomerRoom();
+			RoomDTO room = csDto.getRoom();
+			if (room != null && room.getId() > 0) {
+				Room roomEntity = roomRepository.findById(room.getId()).get();
+				if (roomEntity != null) {
+					customerRoom.setRoom(roomEntity);
+					customerRoom.setCustomer(customerEntity);
+					customerRoom.setIsRented(csDto.getIsRented());
+					customerRoom.setCreatedBy(model.getCreatedBy());
+					customerRoom.setCreatedDate(model.getCreatedDate());
+
+					customerRoomList.add(customerRoom);
+				}
+			}
+		});
+
+		customerEntity.setCustomerRoom(customerRoomList);
+		return customerMapper.toDto(customerRepository.save(customerEntity));
 	}
 
 	@Override
@@ -90,10 +114,12 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public List<CustomerDTO> findByRoomId(Long roomId) {
-//		Room room = roomRepository.findById(roomId).get();
-		List<CustomerRoom> customerRoomList = customerRoomService.findAllByRoomId(roomId);
-		return customerRoomList.stream().map(cs -> customerMapper.toDto(cs.getCustomer())).collect(Collectors.toList());
+	public Set<CustomerDTO> findByRoomId(Long roomId) {
+		Room roomEntity = roomRepository.findById(roomId).get();
+		List<Room> listRoom = new ArrayList<Room>();
+		listRoom.add(roomEntity);
+		List<CustomerRoom> customerRoomList = customerRoomService.findAllByRoomInAndIsRented(listRoom, true);
+		return customerRoomList.stream().map(cs -> customerMapper.toDto(cs.getCustomer())).collect(Collectors.toSet());
 	}
 
 	@Override
