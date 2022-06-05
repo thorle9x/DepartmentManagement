@@ -1,6 +1,5 @@
 package com.department.service.impl;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,7 +13,6 @@ import com.department.exception.ServerException;
 import com.department.mapper.DepartmentMapper;
 import com.department.mapper.RoomMapper;
 import com.department.model.dto.DepartmentDTO;
-import com.department.model.dto.RoomDTO;
 import com.department.model.entity.Department;
 import com.department.repository.DepartmentRepository;
 import com.department.service.DepartmentService;
@@ -73,16 +71,6 @@ public class DepartmentServiceImpl implements DepartmentService {
 		log.debug("Delete Department by id : {}", id);
 		departmentRepository.deleteById(id);
 		return id;
-	}
-
-	@Override
-	public List<RoomDTO> getAllRoomById(long id) throws Exception {
-		log.debug("Get All Room by department id : {}", id);
-		Department department = departmentRepository.findFirstById(id);
-		if (department != null) {
-			return department.getRooms().stream().map(roomMapper::toDto).collect(Collectors.toList());
-		}
-		return Collections.emptyList();
 	}
 
 	@Override

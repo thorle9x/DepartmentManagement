@@ -76,7 +76,7 @@ public class CustomerController extends AbstractController {
 	@ApiOperation(value = "Get All Customer", notes = "Get All Customer")
 	@ApiResponses(value = { @ApiResponse(code = 401, response = Response.class, message = "INVALID_TOKEN") })
 	@GetMapping()
-	public ResponseEntity<ServerResponse> getCustomers() {
+	public ResponseEntity<ServerResponse> getAllCustomer() {
 		return new ResponseEntity<>(new ServerResponse(HttpStatusEnum.SUCCESS).setResult(customerService.findAll()), HttpStatus.OK);
 	}
 

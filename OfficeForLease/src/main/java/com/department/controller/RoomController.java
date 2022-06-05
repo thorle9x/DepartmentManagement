@@ -62,14 +62,14 @@ public class RoomController extends AbstractController{
 	@ApiOperation(value = "Get All Room", notes = "Get All Room")
 	@ApiResponses(value = { @ApiResponse(code = 401, response = Response.class, message = "INVALID_TOKEN") })
 	@GetMapping()
-	public ResponseEntity<ServerResponse> getRooms() {
+	public ResponseEntity<ServerResponse> getAllRoom() {
 		return new ResponseEntity<>(new ServerResponse(HttpStatusEnum.SUCCESS).setResult(roomService.findAll()), HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "Get All Room by Department id", notes = "Get All Room by Department id")
 	@ApiResponses(value = { @ApiResponse(code = 401, response = Response.class, message = "INVALID_TOKEN") })
 	@GetMapping("/department/{id}")
-	public ResponseEntity<ServerResponse> getAllRoom(@PathVariable Long id) {
+	public ResponseEntity<ServerResponse> getAllRoomByDeparmentId(@PathVariable Long id) {
 		List<RoomDTO> listRoom = null;
 		try {
 			listRoom = roomService.findByDepartmentId(id);

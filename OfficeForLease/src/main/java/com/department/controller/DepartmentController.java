@@ -1,7 +1,6 @@
 package com.department.controller;
 
 import java.security.Principal;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.department.common.HttpStatusEnum;
 import com.department.common.ServerResponse;
 import com.department.model.dto.DepartmentDTO;
-import com.department.model.dto.RoomDTO;
 import com.department.service.DepartmentService;
 
 import io.swagger.annotations.ApiOperation;
@@ -62,20 +60,8 @@ public class DepartmentController extends AbstractController {
 	@ApiOperation(value = "Get All Deparment", notes = "Get All Deparment")
 	@ApiResponses(value = { @ApiResponse(code = 401, response = Response.class, message = "INVALID_TOKEN") })
 	@GetMapping()
-	public ResponseEntity<ServerResponse> getDeparments() {
+	public ResponseEntity<ServerResponse> getAllDeparment() {
 		return new ResponseEntity<>(new ServerResponse(HttpStatusEnum.SUCCESS).setResult(departmentService.findAll()), HttpStatus.OK);
 	}
-	
-	@ApiOperation(value = "Get Deparment by id", notes = "Get Deparment by id")
-	@ApiResponses(value = { @ApiResponse(code = 401, response = Response.class, message = "INVALID_TOKEN") })
-	@GetMapping("/{id}/rooms")
-	public ResponseEntity<ServerResponse> getAllRoom(@PathVariable Long id) {
-		List<RoomDTO> roomDto = null;
-		try {
-			roomDto = departmentService.getAllRoomById(id);
-		} catch (Exception e) {
-			return new ResponseEntity<>(new ServerResponse(HttpStatusEnum.NO_RECORD_FOUND, id).setResult(roomDto), HttpStatus.NOT_FOUND);
-		}
-		return new ResponseEntity<>(new ServerResponse(HttpStatusEnum.SUCCESS).setResult(roomDto), HttpStatus.OK);
-	}
+
 }
