@@ -39,6 +39,6 @@ public class User extends AbstractEntity implements Serializable {
 	@Column(name = "LAST_NAME", length = 100, nullable = false)
 	private String lastName;
 
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<UserRole> userRoles;
 }

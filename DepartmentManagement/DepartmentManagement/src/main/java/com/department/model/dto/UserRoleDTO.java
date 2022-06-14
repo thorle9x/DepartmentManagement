@@ -8,19 +8,14 @@ import lombok.Setter;
 @Setter
 public class UserRoleDTO extends AbstractDTO implements Serializable {
 
-  /**
-   * 
-   */
-  private static final long serialVersionUID = -3772312184925870036L;
+	private static final long serialVersionUID = -3772312184925870036L;
 
-  private long Id;
+	private Long roleId;
 
-  private Long assignedUserRoleId;
+	private Long isActive;
 
-  private Long isActive;
+	private RoleDTO userRole;
 
-  private RoleDTO userRole;
-
-  private UserDTO user;
+	private UserDTO user;
 
 }

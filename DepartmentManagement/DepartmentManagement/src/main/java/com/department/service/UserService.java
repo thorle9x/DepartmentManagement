@@ -9,10 +9,6 @@ import org.springframework.data.domain.Pageable;
 import com.department.model.dto.UserDTO;
 import com.department.model.search.UserSearchCriteria;
 
-/**
- * @author bao.pham
- *
- */
 public interface UserService extends IService<UserDTO> {
 	UserDTO findByUserName(String username);
 

@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
@@ -39,9 +38,9 @@ public class JwtTokenUtil implements Serializable {
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	public String generateToken(UserDetails userDetails) {
+	public String generateToken(String username) {
 		Map<String, Object> claims = new HashMap<>();
-		return doGenerateToken(claims, userDetails.getUsername());
+		return doGenerateToken(claims, username);
 	}
 
 	public boolean validateToken(String token, HttpServletRequest request) {

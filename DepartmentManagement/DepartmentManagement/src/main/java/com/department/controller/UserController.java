@@ -31,7 +31,7 @@ import io.swagger.models.Response;
  *
  */
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/user")
 public class UserController extends AbstractController {
 
 	@Autowired

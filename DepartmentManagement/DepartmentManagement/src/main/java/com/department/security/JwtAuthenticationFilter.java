@@ -40,6 +40,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		logger.debug("Authentication Request For '{}'", request.getRequestURL());
 
 		if (!APIUrlUtils.checkAPIUrlValid(request.getServletPath())) {
+			logger.debug("Invid URL");
 			chain.doFilter(request, response);
 			return;
 		}

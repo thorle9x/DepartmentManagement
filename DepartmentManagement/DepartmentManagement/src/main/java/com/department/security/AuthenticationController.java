@@ -53,19 +53,19 @@ public class AuthenticationController {
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public ResponseEntity<?> authentication(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
-		authenProviderDao.setUserDetailsService(userDetailsService);
+//		authenProviderDao.setUserDetailsService(userDetailsService);
 
 		authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 
 		final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 
-		final String token = tokenUtil.generateToken(userDetails);
+		final String token = tokenUtil.generateToken(authenticationRequest.getUsername());
 
 		final List<String> roles = userDetails.getAuthorities().stream().map(grantedAuthority -> grantedAuthority.getAuthority()).collect(Collectors.toList());
 		UserDTO user = userService.findByUserName(userDetails.getUsername());
 		Long userId = null;
 		if (user != null) {
-			userId = user.getId();
+			userId = user.getUserId();
 		}
 
 		return ResponseEntity.ok(new JwtResponse(userId, userDetails.getUsername(), token, roles));

@@ -12,10 +12,6 @@ import org.mapstruct.ReportingPolicy;
 import com.department.model.dto.UserRoleDTO;
 import com.department.model.entity.UserRole;
 
-/**
- * @author bao.pham
- *
- */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface UserRoleMapper {
   

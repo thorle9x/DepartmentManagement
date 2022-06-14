@@ -3,6 +3,7 @@ package com.department.model.entity;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,12 +30,12 @@ public class UserRole extends AbstractEntity implements Serializable {
 	@Column(name = "IS_ACTIVE")
 	private Long isActive;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JsonIgnore
 	@JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
 	private User user;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ROLE_ID", referencedColumnName = "ROLE_ID")
 	private Role role;
 

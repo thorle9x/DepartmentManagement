@@ -5,10 +5,6 @@ package com.department.controller;
 
 import java.security.Principal;
 
-/**
- * @author bao.pham
- *
- */
 public class AbstractController {
 	  public static final String DUMMY_USER = "dummy";
 
