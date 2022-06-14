@@ -1,14 +1,11 @@
 package com.department.model.dto;
 
-import java.io.Serializable;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class RoleDTO extends AbstractDTO implements Serializable {
-
-  private static final long serialVersionUID = -904786520437355295L;
+public class RoleDTO {
 
   private Long roleId;
 

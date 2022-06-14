@@ -12,6 +12,6 @@ import com.department.model.entity.Role;
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long>, JpaSpecificationExecutor<Role> {
 
-	Role findFirstByUserRoleId(Long userRoleId);
+	Role findFirstByRoleId(Long roleId);
 
 }

@@ -46,7 +46,7 @@ public class RoleServiceImpl implements UserRoleService {
 	@Override
 	public RoleDTO update(RoleDTO model, Long id) {
 		log.debug("Update User Role by id : {}", id);
-		Role role = roleRepository.findFirstByUserRoleId(id);
+		Role role = roleRepository.findFirstByRoleId(id);
 		if (role != null) {
 			return roleMapper.toDto(roleRepository.save(role));
 		}
@@ -56,7 +56,7 @@ public class RoleServiceImpl implements UserRoleService {
 	@Override
 	public RoleDTO findById(Long id) throws Exception {
 		log.debug("Find User Role by id : {}", id);
-		Role role = roleRepository.findFirstByUserRoleId(id);
+		Role role = roleRepository.findFirstByRoleId(id);
 		if (role != null) {
 			return roleMapper.toDto(role);
 		}

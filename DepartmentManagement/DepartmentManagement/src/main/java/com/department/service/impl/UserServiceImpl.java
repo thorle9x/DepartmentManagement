@@ -73,10 +73,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		if (!ObjectUtils.isEmpty(model.getUserRoles())) {
 			model.getUserRoles().stream().forEach(assignedUserRole -> {
 				assignedUserRole.setUser(user);
-				assignedUserRole.setRoleId(CommonUtil.generateID());
+				assignedUserRole.setId(CommonUtil.generateID());
 				try {
-					RoleDTO role = userRoleService.findById(assignedUserRole.getUserRole().getRoleId());
-					assignedUserRole.setUserRole(role);
+					RoleDTO role = userRoleService.findById(assignedUserRole.getRole().getRoleId());
+					assignedUserRole.setRole(role);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

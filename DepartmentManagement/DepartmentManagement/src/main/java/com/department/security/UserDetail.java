@@ -29,7 +29,7 @@ public class UserDetail implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Set<GrantedAuthority> authorities = new HashSet<>();
-		assignedUserRoles.forEach(ur -> authorities.add(new Authority(ur.getUserRole().getRoleName())));
+		assignedUserRoles.forEach(ur -> authorities.add(new Authority(ur.getRole().getRoleName())));
 		return authorities;
 	}
 

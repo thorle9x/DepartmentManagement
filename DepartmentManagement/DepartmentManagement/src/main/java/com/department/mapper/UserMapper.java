@@ -22,7 +22,7 @@ import com.department.model.entity.User;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface UserMapper {
 
-	@Mapping(target = "userRoles", qualifiedByName = "UserRoleMapper")
+	@Mapping(target = "userRoles", source = "userRoles", qualifiedByName = "UserRoleMapper")
 	UserDTO toDto(User entity);
 
 	User toEntity(UserDTO dto);

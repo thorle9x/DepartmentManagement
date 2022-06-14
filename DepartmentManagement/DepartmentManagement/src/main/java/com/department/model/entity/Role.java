@@ -27,7 +27,7 @@ public class Role extends AbstractEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ROLE_ID")
-	private Long userRoleId;
+	private Long roleId;
 
 	@Column(name = "IS_ACTIVE", precision = 1, scale = 0)
 	private Long isActive;

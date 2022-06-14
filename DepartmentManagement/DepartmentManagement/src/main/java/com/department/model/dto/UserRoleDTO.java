@@ -1,21 +1,21 @@
 package com.department.model.dto;
 
-import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class UserRoleDTO extends AbstractDTO implements Serializable {
 
-	private static final long serialVersionUID = -3772312184925870036L;
-
-	private Long roleId;
+public class UserRoleDTO {
+	private Long id;
 
 	private Long isActive;
 
-	private RoleDTO userRole;
+	private RoleDTO role;
 
+	@JsonIgnore
 	private UserDTO user;
 
 }
