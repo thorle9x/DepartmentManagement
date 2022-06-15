@@ -170,8 +170,8 @@ public class HandlerException extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<>(body, HttpStatus.FORBIDDEN);
 	}
 
-	@ExceptionHandler({ValidationException.class})
-	public ResponseEntity<Object> handleValidationInternalException(ValidationException ex, WebRequest request) {
+	@ExceptionHandler({ResponseException.class})
+	public ResponseEntity<Object> handleValidationInternalException(ResponseException ex, WebRequest request) {
 		String error = "Bad request";
 		if (ex != null) {
 			error = ex.getMessage();
@@ -185,7 +185,7 @@ public class HandlerException extends ResponseEntityExceptionHandler {
 
 		return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
 	}
-
+	
 	@ExceptionHandler({AuthenticationException.class})
 	public ResponseEntity<Object> handleAuthenticationException(AuthenticationException ex, WebRequest request) {
 		String error = "Authenication failed";

@@ -13,4 +13,6 @@ public interface UserService extends IService<UserDTO> {
 	UserDTO findByUserName(String username);
 
 	Page<UserDTO> search(UserSearchCriteria criteria, Pageable pageable);
+	
+	UserDTO save(UserDTO model);
 }

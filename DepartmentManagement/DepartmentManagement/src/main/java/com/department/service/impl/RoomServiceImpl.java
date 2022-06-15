@@ -8,8 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.department.common.HttpStatusEnum;
-import com.department.exception.ServerException;
+import com.department.exception.ResponseException;
 import com.department.mapper.DepartmentMapper;
 import com.department.mapper.RoomMapper;
 import com.department.model.dto.RoomDTO;
@@ -39,16 +38,12 @@ public class RoomServiceImpl implements RoomService {
 	DepartmentMapper departmentMapper;
 
 	@Override
-	public RoomDTO save(RoomDTO model) throws Exception {
+	public RoomDTO save(RoomDTO model) {
 		log.info("Saving new Room: {} ", model.getName());
-		try {
-			Department department = departmentMapper.toEntity(departmentService.findById(model.getDepartmentId()));
-			Room entity = roomMapper.toEntity(model);
-			entity.setDepartment(department);
-			return roomMapper.toDto(roomRepository.save(entity));
-		} catch (Exception e) {
-			throw new ServerException(HttpStatusEnum.UNEXPECTED, model);
-		}
+		Department department = departmentMapper.toEntity(departmentService.findById(model.getDepartmentId()));
+		Room entity = roomMapper.toEntity(model);
+		entity.setDepartment(department);
+		return roomMapper.toDto(roomRepository.save(entity));
 	}
 
 	@Override
@@ -58,17 +53,17 @@ public class RoomServiceImpl implements RoomService {
 		if (entity != null) {
 			return roomMapper.toDto(roomRepository.save(entity));
 		}
-		throw new ServerException(HttpStatusEnum.NO_RECORD_FOUND, id);
+		throw new ResponseException("ROOM_NOT_FOUND", "Cannot find room!");
 	}
 
 	@Override
-	public RoomDTO findById(Long id) throws Exception {
+	public RoomDTO findById(Long id) {
 		log.debug("Find Room by id : {}", id);
 		Room entity = roomRepository.findById(id).get();
 		if (entity != null) {
 			return roomMapper.toDto(entity);
 		}
-		throw new ServerException(HttpStatusEnum.NO_RECORD_FOUND, id);
+		throw new ResponseException("ROOM_NOT_FOUND", "Cannot find room!");
 	}
 
 	@Override

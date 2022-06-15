@@ -8,8 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.department.common.HttpStatusEnum;
-import com.department.exception.ServerException;
+import com.department.exception.ResponseException;
 import com.department.mapper.DepartmentMapper;
 import com.department.mapper.RoomMapper;
 import com.department.model.dto.DepartmentDTO;
@@ -34,7 +33,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 	RoomMapper roomMapper;
 
 	@Override
-	public DepartmentDTO save(DepartmentDTO model) throws Exception {
+	public DepartmentDTO save(DepartmentDTO model) {
 		log.info("Saving new Department: {} ", model.getName());
 		Department entity = departmentMapper.toEntity(model);
 		return departmentMapper.toDto(departmentRepository.save(entity));
@@ -47,17 +46,17 @@ public class DepartmentServiceImpl implements DepartmentService {
 		if (department != null) {
 			return departmentMapper.toDto(departmentRepository.save(department));
 		}
-		throw new ServerException(HttpStatusEnum.NO_RECORD_FOUND, id);
+		throw new ResponseException("DEPARTMENT_NOT_FOUND", "Cannot find department!");
 	}
 
 	@Override
-	public DepartmentDTO findById(Long id) throws Exception {
+	public DepartmentDTO findById(Long id)  {
 		log.debug("Find Department by id : {}", id);
 		Department department = departmentRepository.findById(id).get();
 		if (department != null) {
 			return departmentMapper.toDto(department);
 		}
-		throw new ServerException(HttpStatusEnum.NO_RECORD_FOUND, id);
+		throw new ResponseException("DEPARTMENT_NOT_FOUND", "Cannot find department!");
 	}
 
 	@Override

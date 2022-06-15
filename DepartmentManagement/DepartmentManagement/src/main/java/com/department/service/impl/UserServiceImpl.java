@@ -18,9 +18,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.department.common.HttpStatusEnum;
-import com.department.exception.ServerException;
-import com.department.exception.ValidationException;
+import com.department.exception.ResponseException;
 import com.department.mapper.UserMapper;
 import com.department.model.dto.UserDTO;
 import com.department.model.entity.User;
@@ -54,12 +52,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	RoleService roleService;
 
 	@Override
-	public UserDTO save(UserDTO model) throws Exception {
+	public UserDTO save(UserDTO model) {
 		log.info("Saving new User: {} ", model.getUsername());
 		UserDTO localUser = findByUserName(model.getUsername());
 		if (localUser != null)  { 
 			log.error("User with username {} already exist. Nothing will be done. ", model.getUsername());
-			throw new ValidationException("USER_NAME_EXISTED", "Username existed!");
+			throw new ResponseException("USER_NAME_EXISTED", "Username existed!");
 		}
 		User entity = new User();
 		userMapper.patch(model, entity);
@@ -77,7 +75,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		return user;
 	}
 
-	@Override
 	public UserDTO update(UserDTO model, Long id) {
 		log.debug("Update User by id : {}", id);
 		User user = userRepository.findFirstByUserId(id);
@@ -85,17 +82,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 			userMapper.patch(model, user);
 			return userMapper.toDto(userRepository.save(user));
 		}
-		throw new ServerException(HttpStatusEnum.NO_RECORD_FOUND, id);
+		throw new ResponseException("USER_NOT_FOUND", "Cannot find user!");
 	}
 
 	@Override
-	public UserDTO findById(Long id) throws Exception {
+	public UserDTO findById(Long id) {
 		log.debug("Find User by id : {}", id);
 		User user = userRepository.findFirstByUserId(id);
 		if (user != null) {
 			return userMapper.toDto(user);
 		}
-		throw new ServerException(HttpStatusEnum.NO_RECORD_FOUND, id);
+		throw new ResponseException("USER_NOT_FOUND", "Cannot find user!");
 	}
 
 	@Override
@@ -130,7 +127,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		if (user != null) {
 			return userMapper.toDto(user);
 		}
-		throw new ServerException(HttpStatusEnum.NO_RECORD_FOUND, username);
+		throw new ResponseException("USER_NOT_FOUND", "Cannot find user!");
 	}
 
 	@Override

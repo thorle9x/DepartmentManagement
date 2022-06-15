@@ -10,8 +10,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.department.common.HttpStatusEnum;
-import com.department.exception.ServerException;
+import com.department.exception.ResponseException;
 import com.department.mapper.CustomerMapper;
 import com.department.model.dto.CustomerDTO;
 import com.department.model.dto.CustomerRoomDTO;
@@ -53,7 +52,7 @@ public class CustomerServiceImpl implements CustomerService {
 	CustomerRoomService customerRoomService;
 
 	@Override
-	public CustomerDTO save(CustomerDTO model) throws Exception {
+	public CustomerDTO save(CustomerDTO model) {
 		log.info("Saving new Customer: {} ", model.getName());
 		Customer customerEntity = customerMapper.toEntity(model);
 		List<CustomerRoom> customerRoomList = new ArrayList<>();
@@ -87,17 +86,17 @@ public class CustomerServiceImpl implements CustomerService {
 		if (customer != null) {
 			return customerMapper.toDto(customerRepository.save(customer));
 		}
-		throw new ServerException(HttpStatusEnum.NO_RECORD_FOUND, id);
+		throw new ResponseException("CUSTOMER_NOT_FOUND", "Cannot find customer!");
 	}
 
 	@Override
-	public CustomerDTO findById(Long id) throws Exception {
+	public CustomerDTO findById(Long id) {
 		log.debug("Find Customer by id : {}", id);
 		Customer customer = customerRepository.findById(id).get();
 		if (customer != null) {
 			return customerMapper.toDto(customer);
 		}
-		throw new ServerException(HttpStatusEnum.NO_RECORD_FOUND, id);
+		throw new ResponseException("CUSTOMER_NOT_FOUND", "Cannot find customer!");
 	}
 
 	@Override

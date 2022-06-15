@@ -1,21 +1,14 @@
-/**
- * 
- */
 package com.department.service;
 
 import java.util.List;
 
-/**
- * @author bao.pham
- *
- */
 public interface IService<D> {
 
-	D save(D model) throws Exception;
+	D save(D model);
 
 	D update(D model, Long id);
 
-	D findById(Long id) throws Exception;
+	D findById(Long id);
 
 	List<D> findAll();
 

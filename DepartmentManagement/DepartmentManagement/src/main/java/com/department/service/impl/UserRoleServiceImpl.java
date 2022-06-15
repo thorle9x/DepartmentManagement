@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.department.service.impl;
 
 import java.util.List;
@@ -12,8 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import com.department.common.HttpStatusEnum;
-import com.department.exception.ServerException;
+import com.department.exception.ResponseException;
 import com.department.mapper.UserRoleMapper;
 import com.department.model.dto.UserRoleDTO;
 import com.department.model.entity.UserRole;
@@ -34,7 +30,7 @@ public class UserRoleServiceImpl implements UserRoleService {
 	UserRoleMapper userRoleMapper;
 
 	@Override
-	public UserRoleDTO save(UserRoleDTO model) throws Exception {
+	public UserRoleDTO save(UserRoleDTO model) {
 		log.info("Saving new Assigned User Role: {} ");
 		UserRole userRole = userRoleMapper.toEntity(model);
 		return userRoleMapper.toDto(userRoleRepository.save(userRole));
@@ -48,11 +44,11 @@ public class UserRoleServiceImpl implements UserRoleService {
 			userRoleMapper.patch(model, userRole);
 			return userRoleMapper.toDto(userRoleRepository.save(userRole));
 		}
-		throw new ServerException(HttpStatusEnum.NO_RECORD_FOUND, id);
+		throw new ResponseException("USER_ROLE_NOT_FOUND", "Cannot find user role!");
 	}
 
 	@Override
-	public UserRoleDTO findById(Long id) throws Exception {
+	public UserRoleDTO findById(Long id) {
 		UserRole userRole = userRoleRepository.findFirstById(id);
 		return userRoleMapper.toDto(userRole);
 	}
