@@ -17,7 +17,7 @@ import com.department.mapper.RoleMapper;
 import com.department.model.dto.RoleDTO;
 import com.department.model.entity.Role;
 import com.department.repository.RoleRepository;
-import com.department.service.UserRoleService;
+import com.department.service.RoleService;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -28,7 +28,7 @@ import lombok.extern.log4j.Log4j2;
 @Service
 @Transactional
 @Log4j2
-public class RoleServiceImpl implements UserRoleService {
+public class RoleServiceImpl implements RoleService {
 
 	@Autowired
 	RoleRepository roleRepository;

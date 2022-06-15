@@ -12,10 +12,6 @@ import com.department.common.HttpStatusEnum;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * @author bao.pham
- *
- */
 @Getter
 @Setter
 public class ServerException extends RuntimeException {

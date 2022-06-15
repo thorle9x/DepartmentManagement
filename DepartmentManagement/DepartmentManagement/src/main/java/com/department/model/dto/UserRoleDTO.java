@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 
 public class UserRoleDTO {
+	@JsonIgnore
 	private Long id;
 
 	private Long isActive;

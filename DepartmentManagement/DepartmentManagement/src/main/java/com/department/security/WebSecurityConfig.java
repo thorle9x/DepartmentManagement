@@ -17,8 +17,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.department.common.APIUrlUtils;
-
 @Configuration
 @EnableWebSecurity(debug = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -67,8 +65,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(WebSecurity webSecurity) {
-		webSecurity.ignoring().antMatchers(HttpMethod.POST, "/authenticate").and().ignoring().antMatchers(HttpMethod.OPTIONS, "/**").and().ignoring()
-				.antMatchers(HttpMethod.GET, "/").and().ignoring().antMatchers(HttpMethod.GET, "/api/category/**").and().ignoring()
-				.antMatchers(HttpMethod.GET, "/api/product/**").and().ignoring().antMatchers(HttpMethod.POST, APIUrlUtils.CUSTOMER_API_SIGNUP_URL);
+		webSecurity.ignoring().antMatchers(HttpMethod.POST, "/authenticate").and()
+						  .ignoring().antMatchers(HttpMethod.OPTIONS, "/**").and()
+						  .ignoring().antMatchers(HttpMethod.GET, "/");
 	}
 }

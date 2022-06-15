@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.department.common.HttpStatusEnum;
 import com.department.common.ServerResponse;
+import com.department.exception.ValidationException;
 import com.department.model.dto.UserDTO;
 import com.department.model.search.UserSearchCriteria;
 import com.department.service.UserService;
@@ -26,10 +27,6 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.models.Response;
 
-/**
- * @author bao.pham
- *
- */
 @RestController
 @RequestMapping("/api/user")
 public class UserController extends AbstractController {
@@ -64,9 +61,11 @@ public class UserController extends AbstractController {
 	@PostMapping()
 	public ResponseEntity<ServerResponse> create(@RequestBody UserDTO model, Principal principal) {
 		try {
-			// add create by, updated by
 			model.setCreatedBy(getPrincipalName(principal));
 			model.setUpdatedBy(getPrincipalName(principal));
+			if (userService.findByUserName(model.getUsername()) != null) {
+				throw new ValidationException("USER_EXISTED", "User existed");
+			}
 			UserDTO user = userService.save(model);
 			return new ResponseEntity<>(new ServerResponse(HttpStatusEnum.SUCCESS).setResult(user), HttpStatus.OK);
 		} catch (Exception e) {

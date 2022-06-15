@@ -3,12 +3,16 @@
  */
 package com.department.service;
 
-import com.department.model.dto.RoleDTO;
+import java.util.List;
+
+import com.department.model.dto.UserRoleDTO;
 
 /**
  * @author bao.pham
  *
  */
-public interface UserRoleService extends IService<RoleDTO> {
+public interface UserRoleService extends IService<UserRoleDTO> {
+
+	List<UserRoleDTO> saveAll(List<UserRoleDTO> entities);
 
 }

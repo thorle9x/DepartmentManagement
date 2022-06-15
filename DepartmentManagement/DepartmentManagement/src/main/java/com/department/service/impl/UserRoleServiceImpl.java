@@ -18,14 +18,14 @@ import com.department.mapper.UserRoleMapper;
 import com.department.model.dto.UserRoleDTO;
 import com.department.model.entity.UserRole;
 import com.department.repository.UserRoleRepository;
-import com.department.service.AssignedUserRoleService;
+import com.department.service.UserRoleService;
 
 import lombok.extern.log4j.Log4j2;
 
 @Service
 @Transactional
 @Log4j2
-public class UserRoleServiceImpl implements AssignedUserRoleService {
+public class UserRoleServiceImpl implements UserRoleService {
 
 	@Autowired
 	UserRoleRepository userRoleRepository;

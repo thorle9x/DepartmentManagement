@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.department.service.impl;
 
 import java.util.ArrayList;
@@ -20,19 +17,17 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
-import com.department.common.CommonUtil;
 import com.department.common.HttpStatusEnum;
 import com.department.exception.ServerException;
+import com.department.exception.ValidationException;
 import com.department.mapper.UserMapper;
-import com.department.model.dto.RoleDTO;
 import com.department.model.dto.UserDTO;
 import com.department.model.entity.User;
 import com.department.model.search.UserSearchCriteria;
 import com.department.model.search.UserSpecification;
 import com.department.repository.UserRepository;
-import com.department.service.AssignedUserRoleService;
+import com.department.service.RoleService;
 import com.department.service.UserRoleService;
 import com.department.service.UserService;
 
@@ -53,37 +48,32 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	PasswordEncoder passwordEncoder;
 
 	@Autowired
-	AssignedUserRoleService assignedUserRoleService;
+	UserRoleService userRoleService;
 
 	@Autowired
-	UserRoleService userRoleService;
+	RoleService roleService;
 
 	@Override
 	public UserDTO save(UserDTO model) throws Exception {
 		log.info("Saving new User: {} ", model.getUsername());
+		UserDTO localUser = findByUserName(model.getUsername());
+		if (localUser != null)  { 
+			log.error("User with username {} already exist. Nothing will be done. ", model.getUsername());
+			throw new ValidationException("USER_NAME_EXISTED", "Username existed!");
+		}
 		User entity = new User();
 		userMapper.patch(model, entity);
-		// set userId
-		entity.setUserId(CommonUtil.generateID());
-		// encode password
+		entity.getUserRoles().forEach(ur->{
+			ur.setUser(entity);
+			ur.setIsActive(1l);
+			ur.setCreatedBy(entity.getCreatedBy());
+			ur.setCreatedDate(entity.getCreatedDate());
+			ur.getRole().setIsActive(1l);
+			ur.getRole().setCreatedBy(entity.getCreatedBy());
+			ur.getRole().setCreatedDate(entity.getCreatedDate());
+		});
 		entity.setPassword(passwordEncoder.encode(model.getPassword()));
-		entity.setUserRoles(null);
-		UserDTO user = userMapper.toDto(userRepository.saveAndFlush(entity));
-		// handle create assign user role
-		if (!ObjectUtils.isEmpty(model.getUserRoles())) {
-			model.getUserRoles().stream().forEach(assignedUserRole -> {
-				assignedUserRole.setUser(user);
-				assignedUserRole.setId(CommonUtil.generateID());
-				try {
-					RoleDTO role = userRoleService.findById(assignedUserRole.getRole().getRoleId());
-					assignedUserRole.setRole(role);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			});
-
-			assignedUserRoleService.saveAll(model.getUserRoles());
-		}
+		UserDTO user = userMapper.toDto(userRepository.save(entity));
 		return user;
 	}
 
