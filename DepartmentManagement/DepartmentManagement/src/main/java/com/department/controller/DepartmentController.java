@@ -23,7 +23,7 @@ import io.swagger.annotations.ApiResponses;
 import io.swagger.models.Response;
 
 @RestController
-@RequestMapping("/department")
+@RequestMapping("/api/department")
 public class DepartmentController extends AbstractController {
 	@Autowired
 	DepartmentService departmentService;

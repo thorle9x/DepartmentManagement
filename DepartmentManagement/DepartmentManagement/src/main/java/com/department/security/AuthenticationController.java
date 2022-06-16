@@ -46,7 +46,7 @@ public class AuthenticationController {
 	@Autowired
 	private UserService userService;
 
-	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+	@RequestMapping(value = "/api/authenticate", method = RequestMethod.POST)
 	public ResponseEntity<?> authentication(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
 		authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());

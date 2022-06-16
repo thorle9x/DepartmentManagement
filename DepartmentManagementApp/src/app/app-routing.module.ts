@@ -9,6 +9,7 @@ const customersModule = () => import('./pages/customers/customers.module').then(
 const productsModule = () => import('./pages/products/products.module').then(x => x.ProductsModule);
 const ordersModule = () => import('./pages/orders/orders.module').then(x => x.OrdersModule);
 const categoriesModule = () => import('./pages/categories/categories.module').then(x => x.CategoriesModule);
+const projectsModule = () => import('./pages/projects/projects.module').then(x => x.ProjectsModule);
 
 const routes: Routes = [
   {path: '', component: HomeComponent, canActivate: [AuthGuard]},
@@ -18,6 +19,7 @@ const routes: Routes = [
   {path: 'orders', loadChildren: ordersModule, canActivate: [AuthGuard], data: {roles: ['ROLE_ADMIN', 'ROLE_USER']}},
   {path: 'products', loadChildren: productsModule, canActivate: [AuthGuard], data: {roles: ['ROLE_ADMIN', 'ROLE_USER']}},
   {path: 'categories', loadChildren: categoriesModule, canActivate: [AuthGuard], data: {roles: ['ROLE_ADMIN', 'ROLE_USER']}},
+  {path: 'projects', loadChildren: projectsModule, canActivate: [AuthGuard], data: {roles: ['ROLE_ADMIN', 'ROLE_USER']}},
 
   // otherwise redirect to home
   {path: '**', redirectTo: ''}

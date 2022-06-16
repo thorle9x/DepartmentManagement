@@ -28,19 +28,32 @@
         <i nz-icon nzType="dashboard"></i>
         <a routerLink="/" routerLinkActive="active">Tổng quan</a>
       </li>
+
+      <li nz-menu-item nz-tooltip nzTooltipPlacement="right" [nzTitle]="isCollapsed ? 'Customers' : ''">
+        <i nz-icon nzType="team"></i>
+        <a href="#" routerLink="/projects" routerLinkActive="active">Dự án</a>
+      </li>
+
+      <li nz-menu-item nz-tooltip nzTooltipPlacement="right" [nzTitle]="isCollapsed ? 'Orders' : ''">
+        <i nz-icon nzType="account-book"></i>
+        <a href="#" routerLink="/orders" routerLinkActive="active">Căn hộ</a>
+      </li>
+
+      <li nz-menu-item nz-tooltip nzTooltipPlacement="right" [nzTitle]="isCollapsed ? 'Products' : ''">
+        <i nz-icon nzType="shop"></i>
+        <a href="#" routerLink="/products" routerLinkActive="active">Khách hàng</a>
+      </li>
+
+      <li nz-menu-item nz-tooltip nzTooltipPlacement="right" [nzTitle]="isCollapsed ? 'Products' : ''">
+        <i nz-icon nzType="shop"></i>
+        <a href="#" routerLink="/products" routerLinkActive="active">Quyền hạn</a>
+      </li>
+
       <li nz-menu-item nz-tooltip nzTooltipPlacement="right" [nzTitle]="isCollapsed ? 'Users' : ''">
         <i nz-icon nzType="user"></i>
         <a href="#" routerLink="/users" routerLinkActive="active">Quản trị viên</a>
       </li>
       <!--
-      <li nz-menu-item nz-tooltip nzTooltipPlacement="right" [nzTitle]="isCollapsed ? 'Customers' : ''">
-        <i nz-icon nzType="team"></i>
-        <a href="#" routerLink="/customers" routerLinkActive="active">Customers</a>
-      </li>
-      <li nz-menu-item nz-tooltip nzTooltipPlacement="right" [nzTitle]="isCollapsed ? 'Orders' : ''">
-        <i nz-icon nzType="account-book"></i>
-        <a href="#" routerLink="/orders" routerLinkActive="active">Orders</a>
-      </li>
       <li nz-menu-item nz-tooltip nzTooltipPlacement="right" [nzTitle]="isCollapsed ? 'Products' : ''">
         <i nz-icon nzType="shop"></i>
         <a href="#" routerLink="/products" routerLinkActive="active">Products</a>
