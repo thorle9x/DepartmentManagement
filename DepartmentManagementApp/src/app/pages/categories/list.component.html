@@ -1,0 +1,50 @@
+<h3>Categories</h3>
+<button nz-button nzType="primary" [routerLink]="'add'"
+        [routerLinkActive]="'active'">
+  <i nz-icon [nzType]="'plus'" [nzTheme]="'outline'"></i>Add Category
+</button>
+<nz-table #basicTable [nzData]="categories">
+  <thead>
+  <tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Code</th>
+    <th>Status</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let category of basicTable.data">
+    <td>{{category.categoryId}}</td>
+    <td>{{category.name}}</td>
+    <td>{{category.categoryCode}}</td>
+    <td>
+      <i *ngIf="category.active" nz-icon nzType="check"></i>
+      <i *ngIf="!category.active" nz-icon nzType="close"></i>
+    </td>
+    <td>
+      <button
+        nz-button nzType="link" [routerLink]="['edit', category.categoryId]" >
+        Edit
+      </button>
+      <button
+        nz-button nzType="link" nzDanger
+        *ngIf="category.active"
+        nz-popconfirm
+        nzPopconfirmTitle="Are you sure disable category?"
+        nzPopconfirmPlacement="bottom"
+        nzCancelText="Cancel"
+        nzOkText="Ok"
+        (nzOnConfirm)="toggleCategoryStatus(category.categoryId, false)">
+        Disable
+      </button>
+      <button
+        nz-button nzType="link"
+        *ngIf="!category.active"
+        (click)="toggleCategoryStatus(category.categoryId, true)">
+        Enable
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>

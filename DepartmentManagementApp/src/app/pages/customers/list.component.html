@@ -1,0 +1,53 @@
+<h3>Customers</h3>
+<button nz-button nzType="primary" [routerLink]="'add'"
+        [routerLinkActive]="'active'">
+  <i nz-icon [nzType]="'plus'" [nzTheme]="'outline'"></i>Add Customer
+</button>
+<nz-table #basicTable [nzData]="customers">
+  <thead>
+  <tr>
+    <th>Id</th>
+    <th>Username</th>
+    <th>Email</th>
+    <th>Status</th>
+    <th>Created Date</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let customer of basicTable.data">
+    <td>{{customer.customerId}}</td>
+    <td>{{customer.username}}</td>
+    <td>{{customer.email}}</td>
+    <td>
+      <i *ngIf="customer.active" nz-icon nzType="check"></i>
+      <i *ngIf="!customer.active" nz-icon nzType="close"></i>
+    </td>
+    <td>{{customer.createdDate}}</td>
+    <td>
+      <!--      <a class="btn btn-sm btn-primary mr-1" routerLink="edit/{{customer.id}}">Edit</a>-->
+      <button
+        nz-button nzType="link">
+        Edit
+      </button>
+      <button
+        nz-button nzType="link" nzDanger
+        *ngIf="customer.active"
+        nz-popconfirm
+        nzPopconfirmTitle="Are you sure disable customer?"
+        nzPopconfirmPlacement="bottom"
+        nzCancelText="Cancel"
+        nzOkText="Ok"
+        (nzOnConfirm)="toggleCustomerStatus(customer.customerId, false)">
+        Disable
+      </button>
+      <button
+        nz-button nzType="link"
+        *ngIf="!customer.active"
+        (click)="toggleCustomerStatus(customer.customerId, true)">
+        Enable
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>

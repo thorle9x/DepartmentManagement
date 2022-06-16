@@ -1,0 +1,57 @@
+<form nz-form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">Name</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input nz-input type="text" formControlName="name" class="form-control"/>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">Description</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input nz-input type="text" formControlName="description" class="form-control"/>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">Link</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input nz-input type="text" formControlName="productLink" class="form-control"/>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">Price</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input nz-input type="number" formControlName="price" class="form-control"/>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">Quantity</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input nz-input type="number" formControlName="quantity" class="form-control"/>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">Category</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input formControlName="categoryId" placeholder="Select a category" nz-input [(ngModel)]="categories"
+             [nzAutocomplete]="auto"/>
+      <nz-autocomplete #auto [compareWith]="compareFun">
+        <nz-auto-option *ngFor="let category of categories" [nzValue]="category.categoryId" [nzLabel]="category.name">
+          {{category.name}}
+        </nz-auto-option>
+      </nz-autocomplete>
+    </nz-form-control>
+  </nz-form-item>
+
+
+  <nz-form-item nz-row class="button-area">
+    <nz-form-control [nzSpan]="14" [nzOffset]="6">
+      <button nz-button nzType="primary">Save</button>
+      <button [routerLink]="'/products'" [routerLinkActive]="'active'" nz-button>Cancel</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>

@@ -1,0 +1,61 @@
+<!--<aside class="sidebar shadow-sm">-->
+<!--  <div class="sidebar-menu pt-3 pb-3">-->
+
+<!--    <ul class="menu-items">-->
+<!--      <li *ngIf="isAdmin()">-->
+<!--        <a href="#" routerLink="/" routerLinkActive="active">Dashboard</a>-->
+<!--      </li>-->
+<!--      <li *ngIf="isAdmin()">-->
+<!--        <a href="#" routerLink="/users" routerLinkActive="active">Users</a>-->
+<!--      </li>-->
+<!--      <li *ngIf="isAdmin()">-->
+<!--        <a href="#" routerLink="/customers" routerLinkActive="active">Customers</a>-->
+<!--      </li>-->
+<!--      <li *ngIf="isUser()">-->
+<!--        <a href="#" routerLink="/orders" routerLinkActive="active">Orders</a>-->
+<!--      </li>-->
+<!--      <li *ngIf="isUser()">-->
+<!--        <a href="#" routerLink="/products" routerLinkActive="active">Products</a>-->
+<!--      </li>-->
+<!--      <li *ngIf="isAdmin()">-->
+<!--        <a href="#" routerLink="/categories" routerLinkActive="active">Categories</a>-->
+<!--      </li>-->
+<!--    </ul>-->
+<!--  </div>-->
+<!--</aside>-->
+
+<nz-sider class="menu-sidebar"
+          nzCollapsible
+          nzWidth="256px"
+          nzBreakpoint="md"
+          [(nzCollapsed)]="isCollapsed"
+          [nzTrigger]="null">
+  <div class="sidebar-logo">
+    <a href="https://ng.ant.design/" target="_blank">
+      <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
+      <h1>Ant Design Of Angular</h1>
+    </a>
+  </div>
+  <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+    <li nz-submenu nzOpen nzTitle="Dashboard" nzIcon="dashboard">
+      <ul>
+        <li nz-menu-item nzMatchRouter>
+          <a routerLink="/welcome">Welcome</a>
+        </li>
+        <li nz-menu-item nzMatchRouter>
+          <a>Monitor</a>
+        </li>
+        <li nz-menu-item nzMatchRouter>
+          <a>Workplace</a>
+        </li>
+      </ul>
+    </li>
+    <li nz-submenu nzOpen nzTitle="Form" nzIcon="form">
+      <ul>
+        <li nz-menu-item nzMatchRouter>
+          <a>Basic Form</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nz-sider>

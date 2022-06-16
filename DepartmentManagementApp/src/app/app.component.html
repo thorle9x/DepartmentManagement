@@ -1,0 +1,83 @@
+<!--<div>-->
+<!--  <app-navbar *ngIf="user"></app-navbar>-->
+<!--  <main>-->
+<!--    <app-sidebar *ngIf="user"></app-sidebar>-->
+<!--    <div class="pages container-fluid pt-4 pb-4 pl-4 pr-4">-->
+<!--      <router-outlet></router-outlet>-->
+
+<!--      <app-footer *ngIf="user"></app-footer>-->
+<!--    </div>-->
+<!--  </main>-->
+<!--</div>-->
+
+<nz-layout class="app-layout">
+  <nz-sider
+    *ngIf="user"
+    class="menu-sidebar"
+    nzCollapsible
+    nzWidth="256px"
+    nzBreakpoint="md"
+    [(nzCollapsed)]="isCollapsed"
+    [nzTrigger]="null">
+    <div class="sidebar-logo">
+      <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
+      <h1>Quản Lý Căn Hộ</h1>
+    </div>
+    <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+      <li nz-menu-item nz-tooltip nzTooltipPlacement="right" [nzTitle]="isCollapsed ? 'Dashboard' : ''">
+        <i nz-icon nzType="dashboard"></i>
+        <a routerLink="/" routerLinkActive="active">Tổng quan</a>
+      </li>
+      <li nz-menu-item nz-tooltip nzTooltipPlacement="right" [nzTitle]="isCollapsed ? 'Users' : ''">
+        <i nz-icon nzType="user"></i>
+        <a href="#" routerLink="/users" routerLinkActive="active">Quản trị viên</a>
+      </li>
+      <!--
+      <li nz-menu-item nz-tooltip nzTooltipPlacement="right" [nzTitle]="isCollapsed ? 'Customers' : ''">
+        <i nz-icon nzType="team"></i>
+        <a href="#" routerLink="/customers" routerLinkActive="active">Customers</a>
+      </li>
+      <li nz-menu-item nz-tooltip nzTooltipPlacement="right" [nzTitle]="isCollapsed ? 'Orders' : ''">
+        <i nz-icon nzType="account-book"></i>
+        <a href="#" routerLink="/orders" routerLinkActive="active">Orders</a>
+      </li>
+      <li nz-menu-item nz-tooltip nzTooltipPlacement="right" [nzTitle]="isCollapsed ? 'Products' : ''">
+        <i nz-icon nzType="shop"></i>
+        <a href="#" routerLink="/products" routerLinkActive="active">Products</a>
+      </li>
+      <li nz-menu-item nz-tooltip nzTooltipPlacement="right" [nzTitle]="isCollapsed ? 'Categories' : ''">
+        <i nz-icon nzType="folder"></i>
+        <a href="#" routerLink="/categories" routerLinkActive="active">Categories</a>
+      </li>
+      -->
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-header *ngIf="user">
+      <div class="app-header">
+        <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
+            <i class="trigger"
+               nz-icon
+               [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+            ></i>
+        </span>
+        <div class="welcome-user">
+            <label>Xin chào </label>
+            <a nz-dropdown [nzDropdownMenu]="menu">
+              {{user.username}}
+            </a>
+            <nz-dropdown-menu #menu="nzDropdownMenu">
+              <ul nz-menu>
+                <li nz-menu-item><a (click)="logout()">Thoát</a></li>
+              </ul>
+            </nz-dropdown-menu>
+        </div>
+      </div>
+    </nz-header>
+    <nz-content>
+      <div class="inner-content">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>
