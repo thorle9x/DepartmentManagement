@@ -21,12 +21,14 @@ import org.springframework.stereotype.Service;
 import com.department.exception.ResponseException;
 import com.department.mapper.UserMapper;
 import com.department.model.dto.UserDTO;
+import com.department.model.entity.Role;
 import com.department.model.entity.User;
+import com.department.model.entity.UserRole;
 import com.department.model.search.UserSearchCriteria;
 import com.department.model.search.UserSpecification;
+import com.department.repository.RoleRepository;
 import com.department.repository.UserRepository;
 import com.department.service.RoleService;
-import com.department.service.UserRoleService;
 import com.department.service.UserService;
 
 import lombok.extern.log4j.Log4j2;
@@ -43,10 +45,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	UserRepository userRepository;
 
 	@Autowired
-	PasswordEncoder passwordEncoder;
+	RoleRepository roleRepository;
 
 	@Autowired
-	UserRoleService userRoleService;
+	PasswordEncoder passwordEncoder;
+
+//	@Autowired
+//	UserRoleService userRoleService;
 
 	@Autowired
 	RoleService roleService;
@@ -55,21 +60,30 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	public UserDTO save(UserDTO model) {
 		log.info("Saving new User: {} ", model.getUsername());
 		User locaUser = userRepository.findFirstByUsername(model.getUsername());
-		if (locaUser != null)  { 
+		if (locaUser != null) {
 			log.error("User with username {} already exist. Nothing will be done. ", model.getUsername());
 			throw new ResponseException("USER_NAME_EXISTED", "Username existed!");
 		}
 		User entity = new User();
 		userMapper.patch(model, entity);
-		entity.getUserRoles().forEach(ur->{
-			ur.setUser(entity);
-			ur.setIsActive(1l);
-			ur.setCreatedBy(entity.getCreatedBy());
-			ur.setCreatedDate(entity.getCreatedDate());
-			ur.getRole().setIsActive(1l);
-			ur.getRole().setCreatedBy(entity.getCreatedBy());
-			ur.getRole().setCreatedDate(entity.getCreatedDate());
-		});
+		List<UserRole> userRoles = new ArrayList<>();
+		List<String> requestUserRoles = model.getUserRoles();
+		if (requestUserRoles != null && requestUserRoles.size() > 0) {
+			requestUserRoles.forEach(role -> {
+				Role roleEntity = roleRepository.findByRoleName(role);
+				if (roleEntity == null) {
+					throw new ResponseException("ROLE_NOT_FOUND", "Cannot find role!");
+				}
+				UserRole userRole = new UserRole();
+				userRole.setCreatedBy(entity.getCreatedBy());
+				userRole.setCreatedDate(entity.getCreatedDate());
+				userRole.setIsActive(1l);
+				userRole.setRole(roleEntity);
+				userRole.setUser(entity);
+				userRoles.add(userRole);
+			});
+		}
+		entity.setUserRoles(userRoles);
 		entity.setPassword(passwordEncoder.encode(model.getPassword()));
 		UserDTO user = userMapper.toDto(userRepository.save(entity));
 		return user;

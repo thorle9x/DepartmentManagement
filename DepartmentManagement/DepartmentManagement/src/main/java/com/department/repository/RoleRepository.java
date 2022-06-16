@@ -13,5 +13,7 @@ import com.department.model.entity.Role;
 public interface RoleRepository extends JpaRepository<Role, Long>, JpaSpecificationExecutor<Role> {
 
 	Role findFirstByRoleId(Long roleId);
+	
+	Role findByRoleName(String roleName);
 
 }

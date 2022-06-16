@@ -23,12 +23,11 @@ public interface UserMapper {
 	@Mapping(target = "userRoles", ignore = true)
 	void patch(UserDTO dto, @MappingTarget User entity);
 
-//	@Named("UserRoleMapper")
-//	@Mapping(source = "role.roleName", target = "java(value.toString())")
-//	String toDto(UserRole entity);
-
 	@Named("UserRoleMapper")
 	default String map(UserRole entity) {
+		if (entity == null || entity.getRole() == null) {
+			return "";
+		}
 		return entity.getRole().getRoleName();
 	}
 
