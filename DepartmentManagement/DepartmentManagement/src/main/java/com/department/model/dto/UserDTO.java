@@ -23,6 +23,6 @@ public class UserDTO extends AbstractDTO {
 
 	private String lastName;
 
-	private List<UserRoleDTO> userRoles;
+	private List<String> userRoles;
 
 }

@@ -54,8 +54,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	@Override
 	public UserDTO save(UserDTO model) {
 		log.info("Saving new User: {} ", model.getUsername());
-		UserDTO localUser = findByUserName(model.getUsername());
-		if (localUser != null)  { 
+		User locaUser = userRepository.findFirstByUsername(model.getUsername());
+		if (locaUser != null)  { 
 			log.error("User with username {} already exist. Nothing will be done. ", model.getUsername());
 			throw new ResponseException("USER_NAME_EXISTED", "Username existed!");
 		}

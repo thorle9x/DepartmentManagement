@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.department.model.search;
 
 import java.util.ArrayList;
@@ -11,10 +8,6 @@ import org.springframework.util.ObjectUtils;
 
 import com.department.model.entity.User;
 
-/**
- * @author bao.pham
- *
- */
 public class UserSpecification {
 
   public static Specification<User> search(UserSearchCriteria filter) {
