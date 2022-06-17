@@ -13,7 +13,6 @@
     <th>Tổng số căn hộ</th>
     <th>Trạng thái</th>
     <th>Ngày bắt đầu</th>
-    <th>Ngày kết thúc</th>
     <th></th>
   </tr>
   </thead>
@@ -22,35 +21,13 @@
     <td>{{project.id}}</td>
     <td>{{project.name}}</td>
     <td>{{project.address}}</td>
+    <td>{{project.owner}}</td>
+    <td>{{project.totalRoom}}</td>
     <td>
       <i *ngIf="project.active" nz-icon nzType="check"></i>
       <i *ngIf="!project.active" nz-icon nzType="close"></i>
     </td>
-    <td>{{project.createdDate}}</td>
-    <td>
-      <!--      <a class="btn btn-sm btn-primary mr-1" routerLink="edit/{{customer.id}}">Edit</a>-->
-      <button
-        nz-button nzType="link">
-        Edit
-      </button>
-      <button
-        nz-button nzType="link" nzDanger
-        *ngIf="project.active"
-        nz-popconfirm
-        nzPopconfirmTitle="Are you sure disable customer?"
-        nzPopconfirmPlacement="bottom"
-        nzCancelText="Cancel"
-        nzOkText="Ok"
-        (nzOnConfirm)="toggleProjectStatus(project.idd, false)">
-        Disable
-      </button>
-      <button
-        nz-button nzType="link"
-        *ngIf="!project.active"
-        (click)="toggleProjectStatus(project.id, true)">
-        Enable
-      </button>
-    </td>
+    <td>{{project.startDate}}</td>
   </tr>
   </tbody>
 </nz-table>

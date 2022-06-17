@@ -12,21 +12,20 @@ export class ProjectsService {
   }
 
   getAll() {
-    return this.httpClient.get<Project[]>(
+    return this.httpClient.get<any[]>(
       `${API_URL}/department`
     ).pipe(
       map(projects => {
-        return projects;
+        return projects.data;
       })
     );
   }
 
   getById(projectId: number) {
-    return this.httpClient.get<Project>(
+    return this.httpClient.get<any[]>(
       `${API_URL}/department/${projectId}`
     ).pipe(
       map(project => {
-        console.log(project);
         return project;
       })
     );
