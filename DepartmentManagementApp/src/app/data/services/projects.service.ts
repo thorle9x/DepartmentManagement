@@ -12,7 +12,7 @@ export class ProjectsService {
   }
 
   getAll() {
-    return this.httpClient.get<any[]>(
+    return this.httpClient.get<Project[]>(
       `${API_URL}/department`
     ).pipe(
       map(projects => {
